@@ -1,5 +1,9 @@
 import fastify from 'fastify'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/prisma'
 export const app = fastify()
 
-const prisma = new PrismaClient()
+
+app.post('/users'(request,reply)=>{
+    
+
+})

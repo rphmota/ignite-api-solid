@@ -11,10 +11,41 @@ datasource db {
 }
 
 model User {
-  id    Int    @id @default(autoincrement())
-  slug  String @unique @default(uuid())
-  name  String
-  email String @unique
+  id            Int       @id @default(autoincrement())
+  slug          String    @unique @default(uuid())
+  name          String
+  email         String    @unique
+  password_hash String
+  created_at    DateTime  @default(now())
+  checkIns      CheckIn[]
 
   @@map("users")
+}
+
+model CheckIn {
+  id           Int       @id @default(autoincrement())
+  slug         String    @unique @default(uuid())
+  created_at   DateTime  @default(now())
+  validated_at DateTime?
+
+  user    User @relation(fields: [user_id], references: [id])
+  user_id Int
+
+  gym    Gym @relation(fields: [gym_id], references: [id])
+  gym_id Int
+
+  @@map("check_ins")
+}
+
+model Gym {
+  id          Int       @id @default(autoincrement())
+  slug        String    @unique @default(uuid())
+  title       String
+  description String?
+  phone       String?
+  Latitude    Decimal
+  Longitude   Decimal
+  checkIns    CheckIn[]
+
+  @@map("gyms")
 }
